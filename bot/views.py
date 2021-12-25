@@ -31,6 +31,13 @@ class BotView(View):
             chat.save()
             print(chat)
             self.send_message(chat.todo_text, t_chat['id'])
+        elif text == 'all':
+            todos = TodoItem.objects.all()
+            text = []
+            for i in todos:
+                text.append(i.todo_text)
+            text_string = ', '.join(text) 
+            self.send_message(text_string, t_chat['id'])
         return JsonResponse({"ok": "POST request processed"})
     @staticmethod
     def send_message(message, chat_id):
