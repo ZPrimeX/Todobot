@@ -31,7 +31,7 @@ class BotView(View):
             chat.save()
             print(chat)
             self.send_message(chat.todo_text, t_chat['id'])
-
+        return JsonResponse({"ok": "POST request processed"})
     @staticmethod
     def send_message(message, chat_id):
         data = {'chat_id': chat_id, 'text': message, 'parse_mode': 'Markdown'}
