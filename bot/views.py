@@ -17,7 +17,7 @@ class BotView(View):
         t_data = json.loads(request.body)
         t_message = t_data["message"]
         t_chat = t_message['chat']
-
+        print(t_data)
         try:
             text = t_message["text"].strip().lower()
         except Exception as e:
@@ -29,6 +29,7 @@ class BotView(View):
         if text == '+':
             chat = TodoItem(todo_text = text, chat_id = t_chat['id'])
             chat.save()
+            print(chat)
             self.send_message(chat.todo_text, t_chat['id'])
 
     @staticmethod
@@ -39,3 +40,6 @@ class BotView(View):
     # {'update_id': 541295583,
     #  'message': {'message_id': 2, 'from': {'id': 67706481, 'is_bot': False, 'first_name': 'M.S.', 'username': 'e_Brain', 'language_code': 'en'},
     #  'chat': {'id': 67706481, 'first_name': 'M.S.', 'username': 'e_Brain', 'type': 'private'}, 'date': 1640434536, 'text': '+'}}
+    
+    
+    #https://api.telegram.org/bot5032541894:AAEGzR8qEreVX2MvJGcfAl8ZUrJDSBqDDrY/setWebhook?url=https://todobot99.herokuapp.com/webhooks/bot/
