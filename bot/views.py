@@ -26,6 +26,8 @@ class BotView(View):
 
 
         text = text.lstrip("/")
+        if text == 'start':
+            self.send_message("Welcome to TodoBot!", t_chat['id'])
         if not text == '':
             chat = TodoItem(todo_text = text, chat_id = t_chat['id'])
             chat.save()
