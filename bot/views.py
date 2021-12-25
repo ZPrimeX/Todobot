@@ -26,7 +26,7 @@ class BotView(View):
 
 
         text = text.lstrip("/")
-        if text == '+':
+        if not text == '':
             chat = TodoItem(todo_text = text, chat_id = t_chat['id'])
             chat.save()
             print(chat)
