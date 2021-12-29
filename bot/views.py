@@ -4,7 +4,7 @@ import os
 import requests
 from django.http import JsonResponse, response
 from django.views import View
-
+import emoji
 from .models import TodoItem
 
 
@@ -24,7 +24,6 @@ class BotView(View):
             print(e) # TODO: remove after testing
             return JsonResponse({'ok': "POST request processed"})
 
-
         text = text.lstrip("/")
         if text == 'start':
             self.send_message("Welcome to TodoBot!", t_chat['id'])
@@ -32,7 +31,9 @@ class BotView(View):
             chat = TodoItem(todo_text = text, chat_id = t_chat['id'])
             chat.save()
             print(chat)
-            self.send_message(chat.todo_text, t_chat['id'])
+            self.send_message(emoji.emojize(':wink:'), t_chat['id'])
+        if text == 'help':
+            self.send_message("Here are the instructions on how to use a bot:")
         elif text == 'all':
             todos = TodoItem.objects.all()
             text = []
@@ -41,6 +42,9 @@ class BotView(View):
             text_string = ', '.join(text) 
             self.send_message(text_string, t_chat['id'])
         return JsonResponse({"ok": "POST request processed"})
+    
+
+
     @staticmethod
     def send_message(message, chat_id):
         data = {'chat_id': chat_id, 'text': message, 'parse_mode': 'Markdown'}
