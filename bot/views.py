@@ -6,7 +6,6 @@ from django.http import JsonResponse, response
 from django.views import View
 from .models import TodoItem
 
-
 TELEGRAM_URL = "https://api.telegram.org/bot"
 TELEGRAM_BOT_TOKEN = "5032541894:AAEGzR8qEreVX2MvJGcfAl8ZUrJDSBqDDrY"
 
@@ -33,7 +32,7 @@ class BotView(View):
             pass
             self.send_message(chat.todo_text, t_chat['id'])
         if text == 'help':
-            self.send_message("Here are the instructions on how to use a bot:")
+            self.send_message('\U0001F609' ,t_chat['id'])
         elif text == 'all':
             todos = TodoItem.objects.all()
             text = []
