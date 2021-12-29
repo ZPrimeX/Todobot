@@ -4,7 +4,6 @@ import os
 import requests
 from django.http import JsonResponse, response
 from django.views import View
-import emoji
 from .models import TodoItem
 
 
@@ -31,7 +30,8 @@ class BotView(View):
             chat = TodoItem(todo_text = text, chat_id = t_chat['id'])
             chat.save()
             print(chat)
-            self.send_message(emoji.emojize(':wink:'), t_chat['id'])
+            pass
+            self.send_message(chat.todo_text, t_chat['id'])
         if text == 'help':
             self.send_message("Here are the instructions on how to use a bot:")
         elif text == 'all':
