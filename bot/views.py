@@ -22,26 +22,33 @@ class BotView(View):
             return JsonResponse({'ok': "POST request processed"})
 
         text = text.lstrip("/")
+        print(text)
         if text == 'start':
             self.send_message("Welcome to TodoBot!\n To add a todo just simply type it in. \n For example, 'Finish the homework'", '.', t_chat['id'])
-        if text == 'add':                
+        if not(text == '' ) and text!='start' and text!='all':                
             chat = TodoItem(todo_text = text, chat_id = t_chat['id'])
             chat.save()
             self.send_message('Done ' + '\U00002714' ,t_chat['id'])
         if text == 'remove':
-            self.send_message("Which todo do you want to remove?")
-            if not(text == ''):
-                self.send_message('Done')
+            content = self.all_items(t_chat)
+            self.send_message(f"Which todo do you want to remove?\n Provide an id of a todo.\n\n {content}", t_chat['id'])
+        if not(text == ''):
+            chat = TodoItem.delete()
+            self.send_message('Done ' + '\U00002714' ,t_chat['id'])
         elif text == 'all':
-            todos = TodoItem.objects.all()
-            text = []
-            for i in todos:
-                text.append(i.todo_text)
-            text_string = '\n '.join(text) 
-            self.send_message(text_string.upper(), t_chat['id'])
+            self.all_items()
         return JsonResponse({"ok": "POST request processed"})
-
-
+    
+    
+    @staticmethod
+    def all_items(self, t_chat):
+        todos = TodoItem.objects.all()
+        text = []
+        for i in todos:
+            text.append({"text": i.todo_text, "id": i.chat_id})
+        text_string = '\n '.join(f'{text.id} {text.text}')
+        # [{id: 1, text: eat}, {id:}, {}, {}, {...}]
+        return text_string
 
     @staticmethod
     def send_message(message, chat_id):
