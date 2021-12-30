@@ -44,13 +44,9 @@ class BotView(View):
     def all_items():
         todos = TodoItem.objects.all()
         text = []
-        text_list = []
         for i in todos:
-            text.append({"text": i.todo_text, "id": i.chat_id})
-        for i in text:
-            text_list.append(f"{i.text}{i.id}")
-        # [{id: 1, text: eat}, {id:}, {}, {}, {...}]
-        text_string = '\n'.join(text_list)
+            text.append(f"{i.todo_text}, {i.chat_id}")
+        text_string = '\n'.join(text)
         return text_string
 
     @staticmethod
