@@ -5,7 +5,6 @@ import requests
 from django.http import JsonResponse, response
 from django.views import View
 from .models import TodoItem
-
 TELEGRAM_URL = "https://api.telegram.org/bot"
 TELEGRAM_BOT_TOKEN = "5032541894:AAEGzR8qEreVX2MvJGcfAl8ZUrJDSBqDDrY"
 
@@ -24,18 +23,19 @@ class BotView(View):
 
         text = text.lstrip("/")
         if text == 'start':
-            self.send_message("Welcome to TodoBot!\n To add a todo just simply type it in. \n For example, 'Finish the homework", t_chat['id'])
-        if (not text == '' and text != 'start') and text != 'all':
+            self.send_message("Welcome to TodoBot!\n To add a todo just simply type it in. \n For example, 'Finish the homework.'", t_chat['id'])
+        if text == 'add ' + '':
             chat = TodoItem(todo_text = text, chat_id = t_chat['id'])
             chat.save()
             self.send_message('Done ' + '\U00002714' ,t_chat['id'])
         elif text == 'all':
             todos = TodoItem.objects.all()
             text = []
+            text.remove('add ')
             for i in todos:
                 text.append(i.todo_text)
-            text_string = ', '.join(text) 
-            self.send_message(text_string, t_chat['id'])
+            text_string = '\n '.join(text) 
+            self.send_message(text_string.upper(), t_chat['id'])
         return JsonResponse({"ok": "POST request processed"})
     
 
