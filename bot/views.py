@@ -24,7 +24,7 @@ class BotView(View):
         text = text.lstrip("/")
         print(text)
         if text == 'start':
-            self.send_message("Welcome to TodoBot!\n To add a todo just simply type it in. \n For example, 'Finish the homework'", '.', t_chat['id'])
+            self.send_message("Welcome to TodoBot!\n To add a todo just simply type it in. \n For example, 'Finish the homework'.", t_chat['id'])
         if not(text == '' ) and (text!='start' and text!='all'):                
             chat = TodoItem(todo_text = text, chat_id = t_chat['id'])
             chat.save()
