@@ -25,10 +25,12 @@ class BotView(View):
         print(text)
         if text == 'start':
             self.send_message("Welcome to TodoBot!\n To add a todo just simply type it in. \n For example, 'Finish the homework'.", t_chat['id'])
-        if not(text == '' ) and (text!='start' and text!='all'):                
-            chat = TodoItem(todo_text = text, chat_id = t_chat['id'])
-            chat.save()
-            self.send_message('Done ' + '\U00002714' ,t_chat['id'])
+        if not text == '':
+            if text!= 'all' and text!='start':
+                if text!= 'remove':                
+                    chat = TodoItem(todo_text = text, chat_id = t_chat['id'])
+                    chat.save()
+                    self.send_message('Done ' + '\U00002714' ,t_chat['id'])
         if text == 'remove':
             content = self.all_items()
             self.send_message(f"Which todo do you want to remove?\n Provide an id of a todo.\n\n {content}", t_chat['id'])
