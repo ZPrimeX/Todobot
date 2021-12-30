@@ -35,7 +35,7 @@ class BotView(View):
         #if not(text == ''):
             #chat = TodoItem.delete()
             #self.send_message('Done ' + '\U00002714' ,t_chat['id'])
-        elif text == 'all':
+        if text == 'all':
             self.all_items()
         return JsonResponse({"ok": "POST request processed"})
     
@@ -45,7 +45,7 @@ class BotView(View):
         todos = TodoItem.objects.all()
         text = []
         for i in todos:
-            text.append(f"{i.todo_text}, {i.chat_id}")
+            text.append(f"{i.todo_text}, {i.id}")
         text_string = '\n'.join(text)
         return text_string
 
