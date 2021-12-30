@@ -32,9 +32,9 @@ class BotView(View):
         if text == 'remove':
             content = self.all_items(t_chat)
             self.send_message(f"Which todo do you want to remove?\n Provide an id of a todo.\n\n {content}", t_chat['id'])
-        if not(text == ''):
-            chat = TodoItem.delete()
-            self.send_message('Done ' + '\U00002714' ,t_chat['id'])
+        #if not(text == ''):
+            #chat = TodoItem.delete()
+            #self.send_message('Done ' + '\U00002714' ,t_chat['id'])
         elif text == 'all':
             self.all_items()
         return JsonResponse({"ok": "POST request processed"})
