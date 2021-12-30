@@ -24,20 +24,23 @@ class BotView(View):
         text = text.lstrip("/")
         if text == 'start':
             self.send_message("Welcome to TodoBot!\n To add a todo just simply type it in. \n For example, 'Finish the homework'", '.', t_chat['id'])
-        if text == 'add ' + str():
+        if text == 'add':                
             chat = TodoItem(todo_text = text, chat_id = t_chat['id'])
             chat.save()
             self.send_message('Done ' + '\U00002714' ,t_chat['id'])
+        if text == 'remove':
+            self.send_message("Which todo do you want to remove?")
+            if not(text == ''):
+                self.send_message('Done')
         elif text == 'all':
             todos = TodoItem.objects.all()
             text = []
-            text.remove('add ')
             for i in todos:
                 text.append(i.todo_text)
             text_string = '\n '.join(text) 
             self.send_message(text_string.upper(), t_chat['id'])
         return JsonResponse({"ok": "POST request processed"})
-    
+
 
 
     @staticmethod
