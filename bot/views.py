@@ -38,7 +38,8 @@ class BotView(View):
             #chat = TodoItem.delete()
             #self.send_message('Done ' + '\U00002714' ,t_chat['id'])
         if text == 'all':
-            self.all_items()
+            content = self.all_items()
+            self.send_message(f"{content}", t_chat['id'])
         return JsonResponse({"ok": "POST request processed"})
     
     
