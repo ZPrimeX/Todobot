@@ -28,10 +28,6 @@ class BotView(View):
         if (not text == '' and text != 'start') and text != 'all':
             chat = TodoItem(todo_text = text, chat_id = t_chat['id'])
             chat.save()
-            print(chat)
-            pass
-            self.send_message(chat.todo_text, t_chat['id'])
-        if text == 'help':
             self.send_message('Done ' + '\U00002714' ,t_chat['id'])
         elif text == 'all':
             todos = TodoItem.objects.all()
