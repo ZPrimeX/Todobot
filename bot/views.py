@@ -24,7 +24,7 @@ class BotView(View):
         text = text.lstrip("/")
         print(text)
         if text == 'start':
-            self.send_message("Welcome to TodoBot!\n To add a todo just simply type it in. \n For example, 'Finish the homework'.", t_chat['id'])
+            self.send_message("Welcome to TodoBot!\nTo add a todo just simply type it in.\nFor example, 'Finish the homework'.", t_chat['id'])
         if not text == '':
             if text!= 'all' and text!='start':
                 if text!= 'remove':                
@@ -33,10 +33,13 @@ class BotView(View):
                     self.send_message('Done ' + '\U00002714' ,t_chat['id'])
         if text == 'remove':
             content = self.all_items()
-            self.send_message(f"Which todo do you want to remove?\n Provide an id of a todo.\n\n {content}", t_chat['id'])
-        #if not(text == ''):
-            #chat = TodoItem.delete()
-            #self.send_message('Done ' + '\U00002714' ,t_chat['id'])
+            self.send_message(f"Which todo do you want to remove?\nProvide an id of a todo.\n\n{content}", t_chat['id'])
+        if text == str():
+            todos = TodoItem.objects.all()
+            for i in todos:
+                if text == i.id:
+                    del (f"{i.id}, {i.todo_text}")
+                    TodoItem.save()
         if text == 'all':
             content = self.all_items()
             self.send_message(f"{content}", t_chat['id'])
@@ -48,7 +51,7 @@ class BotView(View):
         todos = TodoItem.objects.all()
         text = []
         for i in todos:
-            text.append(f"{i.todo_text}, {i.id}")
+            text.append(f"{i.id}, {i.todo_text}")
         text_string = '\n'.join(text)
         return text_string
 
