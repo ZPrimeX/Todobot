@@ -34,12 +34,13 @@ class BotView(View):
         if text == 'remove':
             content = self.all_items()
             self.send_message(f"Which todo do you want to remove?\nProvide an id of a todo.\n\n{content}", t_chat['id'])
-        if text == str():
+        if text == int():
             todos = TodoItem.objects.all()
             for i in todos:
                 if text == i.id:
                     del (f"{i.id}, {i.todo_text}")
                     TodoItem.save()
+                    self.send_message('Done, ' + (f"{i.todo_text} ") + 'deleted ' + '\U00002714' ,t_chat['id'])
         if text == 'all':
             content = self.all_items()
             self.send_message(f"{content}", t_chat['id'])
