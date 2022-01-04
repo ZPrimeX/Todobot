@@ -31,17 +31,20 @@ class BotView(View):
                     chat = TodoItem(todo_text = text, chat_id = t_chat['id'])
                     chat.save()
                     self.send_message('Done ' + '\U00002714' ,t_chat['id'])
+        
         if text == 'remove':
             content = self.all_items()
             self.send_message(f"Which todo do you want to remove?\nProvide an id of a todo.\n\n{content}", t_chat['id'])
+        
+        if text == 'all':
+            content = self.all_items()
+            self.send_message(f"{content}", t_chat['id'])
+        
         if type(int(text)) == 'int':
             print(type(text))
             todo = TodoItem.objects.filter(id=int(text)).delete()
             todo.save()
             self.send_message('Done ' + '\U00002714' ,t_chat['id'])
-        if text == 'all':
-            content = self.all_items()
-            self.send_message(f"{content}", t_chat['id'])
         return JsonResponse({"ok": "POST request processed"})
     
     
